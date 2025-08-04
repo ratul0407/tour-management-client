@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     children: [
       {
         Component: About,
-        path: "/about",
+        path: "about",
       },
     ],
   },
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     children: [
       {
         Component: Analytics,
-        path: "/analytics",
+        path: "analytics",
       },
     ],
   },
