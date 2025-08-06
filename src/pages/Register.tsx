@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import register from "../assets/images/register.jpg";
+import registerImg from "../assets/images/register.jpg";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,10 +17,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Password from "@/components/ui/Password";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
 
 const registerSchema = z
   .object({
-    name: z.string().min(3, { error: "Name is too short" }),
+    name: z
+      .string()
+      .min(3, { error: "Name is too short" })
+      .max(50, { error: "Name is too big" }),
     email: z.email(),
     password: z
       .string()
@@ -29,11 +34,12 @@ const registerSchema = z
       .string()
       .min(6, { error: "confirm password did not match" }),
   })
-  .refine((data) => data.password !== data.confirmPassword, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Password do not match",
     path: ["confirmPassword"],
   });
 const Register = ({ className, ...props }: React.ComponentProps<"form">) => {
+  const [register] = useRegisterMutation();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -44,8 +50,19 @@ const Register = ({ className, ...props }: React.ComponentProps<"form">) => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof registerSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    const userInfo = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      const result = await register(userInfo).unwrap();
+      console.log(result);
+      toast.success("User created successfully!");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="grid lg:grid-cols-2 max-h-svh gap-12">
@@ -128,7 +145,7 @@ const Register = ({ className, ...props }: React.ComponentProps<"form">) => {
         </form>
       </Form>
       <div className="relative max-h-svh w-full">
-        <img src={register} className="max-h-svh w-full" />
+        <img src={registerImg} className="max-h-svh w-full" />
       </div>
     </div>
   );

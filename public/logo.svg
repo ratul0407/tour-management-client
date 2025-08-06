@@ -1,5 +1,3 @@
-export const Logo = () => {
-  return (
     <svg
       id="logo-38"
       width="78"
@@ -25,5 +23,3 @@ export const Logo = () => {
         fill="#0077b6"
       ></path>{" "}
     </svg>
-  );
-};
