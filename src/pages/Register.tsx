@@ -18,14 +18,21 @@ import {
 } from "@/components/ui/form";
 import Password from "@/components/ui/Password";
 
-const registerSchema = z.object({
-  name: z.string().min(3, { error: "Name is too short" }),
-  email: z.email(),
-  password: z.string().min(6, { error: "password must be 6 characters long" }),
-  confirmPassword: z
-    .string()
-    .min(6, { error: "confirm password did not match" }),
-});
+const registerSchema = z
+  .object({
+    name: z.string().min(3, { error: "Name is too short" }),
+    email: z.email(),
+    password: z
+      .string()
+      .min(6, { error: "password must be 6 characters long" }),
+    confirmPassword: z
+      .string()
+      .min(6, { error: "confirm password did not match" }),
+  })
+  .refine((data) => data.password !== data.confirmPassword, {
+    message: "Password do not match",
+    path: ["confirmPassword"],
+  });
 const Register = ({ className, ...props }: React.ComponentProps<"form">) => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -120,8 +127,8 @@ const Register = ({ className, ...props }: React.ComponentProps<"form">) => {
           <Button type="submit">Submit</Button>
         </form>
       </Form>
-      <div className="relative max-h-svh">
-        <img src={register} className="max-h-svh" />
+      <div className="relative max-h-svh w-full">
+        <img src={register} className="max-h-svh w-full" />
       </div>
     </div>
   );
