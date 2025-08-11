@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import loginImg from "../assets/images/login.jpg";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import {
   Form,
   FormControl,
@@ -25,6 +25,7 @@ const loginSchema = z.object({
 });
 const Login = ({ className, ...props }: React.ComponentProps<"form">) => {
   const [login] = useLoginMutation();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -40,9 +41,13 @@ const Login = ({ className, ...props }: React.ComponentProps<"form">) => {
     try {
       const result = await login(userInfo).unwrap();
       console.log(result);
+
       toast.success("User logged in successfully!");
     } catch (error: any) {
-      console.log(error);
+      if (error.status === 401) {
+        toast.error("Your account is not verified");
+        navigate("/verify", { state: data.email });
+      }
     }
   };
   return (

@@ -19,7 +19,7 @@ import {
 import Password from "@/components/ui/Password";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const registerSchema = z
   .object({
@@ -41,6 +41,7 @@ const registerSchema = z
   });
 const Register = ({ className, ...props }: React.ComponentProps<"form">) => {
   const [register] = useRegisterMutation();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -61,6 +62,7 @@ const Register = ({ className, ...props }: React.ComponentProps<"form">) => {
       const result = await register(userInfo).unwrap();
       console.log(result);
       toast.success("User created successfully!");
+      navigate("/verify");
     } catch (error) {
       console.log(error);
     }

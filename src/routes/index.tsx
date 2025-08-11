@@ -5,6 +5,7 @@ import { Analytics } from "@/pages/Analytics";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import { createBrowserRouter } from "react-router";
+import Verify from "./Verify";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     Component: Register,
+  },
+  {
+    path: "/verify",
+    Component: Verify,
   },
 ]);
 export default router;
