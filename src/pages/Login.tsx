@@ -42,6 +42,9 @@ const Login = ({ className, ...props }: React.ComponentProps<"form">) => {
     try {
       const result = await login(userInfo).unwrap();
       console.log(result);
+      if (result.success) {
+        navigate("/");
+      }
       toast.success("User logged in successfully!");
     } catch (error: any) {
       if (error.status === 401) {

@@ -13,6 +13,12 @@ import {
 } from "@/components/ui/popover";
 import { ModeToggle } from "./ModeToggler";
 import { Link } from "react-router";
+import {
+  authApi,
+  useGetMeQuery,
+  useLogOutMutation,
+} from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hook";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -21,6 +27,16 @@ const navigationLinks = [
 ];
 
 export default function Component() {
+  const { data } = useGetMeQuery(undefined);
+  const dispatch = useAppDispatch();
+  const [LogOut] = useLogOutMutation();
+  console.log(data?.data?.data);
+
+  const handleLogout = async () => {
+    await LogOut(undefined);
+    dispatch(authApi.util.resetApiState());
+  };
+
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -104,13 +120,16 @@ export default function Component() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <Link to="/login"> Login </Link>
-          </Button>
           <ModeToggle />
-          <Button asChild size="sm" className="text-sm">
-            <a href="#">Get Started</a>
-          </Button>
+          {data?.data?.data?.email ? (
+            <Button onClick={handleLogout} variant="outline">
+              Logout
+            </Button>
+          ) : (
+            <Button asChild size="sm" className="text-sm">
+              <Link to="/login"> Login </Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>

@@ -3,7 +3,7 @@ import { ILogin, IRegister, IResponse, ISendOTP, IVerifyOTP } from "@/types";
 import { ILoginResponse } from "@/types/response/LoginResponse";
 import { IRegisterResponse } from "@/types/response/RegisterResonse";
 
-const authApi = baseApi.injectEndpoints({
+export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation<IResponse<IRegisterResponse>, IRegister>({
       query: (userInfo) => ({
@@ -33,6 +33,18 @@ const authApi = baseApi.injectEndpoints({
         data: otpInfo,
       }),
     }),
+    getMe: builder.query({
+      query: () => ({
+        url: "/user/me",
+        method: "GET",
+      }),
+    }),
+    logOut: builder.mutation({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -41,4 +53,6 @@ export const {
   useLoginMutation,
   useSendOTPMutation,
   useVerifyOTPMutation,
+  useGetMeQuery,
+  useLogOutMutation,
 } = authApi;
