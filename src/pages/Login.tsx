@@ -41,11 +41,10 @@ const Login = ({ className, ...props }: React.ComponentProps<"form">) => {
     try {
       const result = await login(userInfo).unwrap();
       console.log(result);
-
       toast.success("User logged in successfully!");
     } catch (error: any) {
       if (error.status === 401) {
-        toast.error("Your account is not verified");
+        toast.error("You are not verified");
         navigate("/verify", { state: data.email });
       }
     }
@@ -109,7 +108,9 @@ const Login = ({ className, ...props }: React.ComponentProps<"form">) => {
                 )}
               />
 
-              <Button type="submit">Login</Button>
+              <Button className="dark:text-white" type="submit">
+                Login
+              </Button>
             </form>
           </Form>
           <div className="text-center text-sm mt-10">
