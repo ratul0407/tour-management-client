@@ -19,19 +19,23 @@ import {
   useLogOutMutation,
 } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
+import { role } from "@/constants/role";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "Home", role: "PUBLIC" },
+  { href: "/about", label: "About", role: "PUBLIC" },
+  { href: "/admin", label: "ADMIN", role: role.admin },
+  { href: "/user", label: "USER", role: role.user },
 ];
 
 export default function Component() {
   const { data } = useGetMeQuery(undefined);
   const dispatch = useAppDispatch();
   const [LogOut] = useLogOutMutation();
-  console.log(data);
-
+  console.log(data?.data);
   const handleLogout = async () => {
     await LogOut(undefined);
     dispatch(authApi.util.resetApiState());
@@ -120,8 +124,14 @@ export default function Component() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
+          <Link>
+            <Avatar>
+              <AvatarImage src={data?.data?.picture} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </Link>
           <ModeToggle />
-          {data?.data?.data?.email ? (
+          {data?.data?.email ? (
             <Button onClick={handleLogout} variant="outline">
               Logout
             </Button>
