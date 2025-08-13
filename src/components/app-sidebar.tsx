@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { SearchForm } from "@/components/search-form";
-import { VersionSwitcher } from "@/components/version-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -16,18 +14,16 @@ import {
 } from "@/components/ui/sidebar";
 import { Logo } from "@/assets/icons/Logo";
 import { Link } from "react-router";
-import { adminSideBarItems } from "@/routes/adminSideBarItems";
 import { getSidebarItems } from "@/utils/getSidebarItems";
-import { role } from "@/constants/role";
 import { useGetMeQuery } from "@/redux/features/auth/auth.api";
 
 // This is sample data.
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: userData } = useGetMeQuery(undefined);
+  console.log(userData?.data?.data);
   const data = {
-    versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
-    navMain: getSidebarItems(userData?.data?.role),
+    navMain: getSidebarItems(userData?.data?.data?.role),
   };
   return (
     <Sidebar {...props}>

@@ -3,7 +3,7 @@ import { ISidebarItems } from "@/types";
 
 export const userSidebarItems: ISidebarItems[] = [
   {
-    title: "Bookings",
+    title: "History",
     url: "#",
     items: [
       {

@@ -5,7 +5,7 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import { createBrowserRouter } from "react-router";
 import Verify from "./Verify";
-import Bookings from "@/pages/user/Bookings";
+
 import AdminLayout from "@/components/layout/AdminLayout";
 import { generateRoute } from "@/utils/generateRoute";
 import { adminSideBarItems } from "./adminSideBarItems";
