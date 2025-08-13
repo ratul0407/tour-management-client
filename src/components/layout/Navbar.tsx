@@ -30,7 +30,7 @@ export default function Component() {
   const { data } = useGetMeQuery(undefined);
   const dispatch = useAppDispatch();
   const [LogOut] = useLogOutMutation();
-  console.log(data?.data?.data);
+  console.log(data);
 
   const handleLogout = async () => {
     await LogOut(undefined);

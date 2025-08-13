@@ -38,12 +38,14 @@ export const authApi = baseApi.injectEndpoints({
         url: "/user/me",
         method: "GET",
       }),
+      providesTags: ["USER"],
     }),
     logOut: builder.mutation({
       query: () => ({
         url: "/auth/logout",
         method: "POST",
       }),
+      invalidatesTags: ["USER"],
     }),
   }),
 });

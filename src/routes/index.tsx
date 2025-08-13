@@ -9,6 +9,7 @@ import Bookings from "@/pages/user/Bookings";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { generateRoute } from "@/utils/generateRoute";
 import { adminSideBarItems } from "./adminSideBarItems";
+import { userSidebarItems } from "./userSideBarItems";
 
 const router = createBrowserRouter([
   {
@@ -29,13 +30,7 @@ const router = createBrowserRouter([
   {
     Component: AdminLayout,
     path: "/user",
-    children: [
-      {
-        Component: Bookings,
-        path: "bookings",
-      },
-      {},
-    ],
+    children: [...generateRoute(userSidebarItems)],
   },
   {
     path: "/login",

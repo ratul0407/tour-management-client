@@ -39,7 +39,9 @@ const Login = ({ className, ...props }: React.ComponentProps<"form">) => {
       email: data.email,
       password: data.password,
     };
+    console.log(userInfo);
     try {
+      console.log("Calling the mutation", login);
       const result = await login(userInfo).unwrap();
       console.log(result);
       if (result.success) {

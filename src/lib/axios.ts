@@ -7,7 +7,6 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   function (config) {
-    console.log(config);
     return config;
   },
   function (error) {
@@ -17,7 +16,6 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   function onFulFilled(response) {
     return response;
-    console.log(response);
   },
   function onRejected(error) {
     return Promise.reject(error);

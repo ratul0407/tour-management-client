@@ -17,18 +17,24 @@ import {
 import { Logo } from "@/assets/icons/Logo";
 import { Link } from "react-router";
 import { adminSideBarItems } from "@/routes/adminSideBarItems";
+import { getSidebarItems } from "@/utils/getSidebarItems";
+import { role } from "@/constants/role";
+import { useGetMeQuery } from "@/redux/features/auth/auth.api";
 
 // This is sample data.
-const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
-  navMain: adminSideBarItems,
-};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: userData } = useGetMeQuery(undefined);
+  const data = {
+    versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
+    navMain: getSidebarItems(userData?.data?.role),
+  };
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
