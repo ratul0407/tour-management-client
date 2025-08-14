@@ -124,12 +124,11 @@ export default function Component() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Link>
-            <Avatar>
-              <AvatarImage src={data?.data?.picture} />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </Link>
+          <Avatar>
+            <AvatarImage src={data?.data?.picture} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+
           <ModeToggle />
           {data?.data?.email ? (
             <Button onClick={handleLogout} variant="outline">
