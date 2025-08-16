@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
 
-const AdminLayout = () => {
+const DashboardLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -46,4 +46,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default DashboardLayout;

@@ -3,10 +3,10 @@ import App from "@/App";
 import { About } from "@/pages/About";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import Verify from "./Verify";
 
-import AdminLayout from "@/components/layout/AdminLayout";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import { generateRoute } from "@/utils/generateRoute";
 import { adminSideBarItems } from "./adminSideBarItems";
 import { userSidebarItems } from "./userSideBarItems";
@@ -23,14 +23,20 @@ const router = createBrowserRouter([
     ],
   },
   {
-    Component: AdminLayout,
+    Component: DashboardLayout,
     path: "/admin",
-    children: [...generateRoute(adminSideBarItems)],
+    children: [
+      { index: true, element: <Navigate to="/admin/analytics" /> },
+      ...generateRoute(adminSideBarItems),
+    ],
   },
   {
-    Component: AdminLayout,
+    Component: DashboardLayout,
     path: "/user",
-    children: [...generateRoute(userSidebarItems)],
+    children: [
+      { index: true, element: <Navigate to="/user/bookings" /> },
+      ...generateRoute(userSidebarItems),
+    ],
   },
   {
     path: "/login",

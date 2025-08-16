@@ -27,15 +27,13 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
-  { href: "/admin", label: "ADMIN", role: role.admin },
-  { href: "/user", label: "USER", role: role.user },
 ];
 
 export default function Component() {
   const { data } = useGetMeQuery(undefined);
   const dispatch = useAppDispatch();
   const [LogOut] = useLogOutMutation();
-  console.log(data?.data);
+
   const handleLogout = async () => {
     await LogOut(undefined);
     dispatch(authApi.util.resetApiState());
@@ -124,13 +122,21 @@ export default function Component() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Avatar>
-            <AvatarImage src={data?.data?.picture} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          {data?.data && (
+            <Link
+              to={data?.data?.data?.role === role.user ? "/user" : "/admin"}
+            >
+              <Avatar>
+                <AvatarImage src={data?.data?.picture} />
+                <AvatarFallback>
+                  {data?.data?.data?.name?.split("")[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
+          )}
 
           <ModeToggle />
-          {data?.data?.email ? (
+          {data?.data?.data?.email ? (
             <Button onClick={handleLogout} variant="outline">
               Logout
             </Button>
