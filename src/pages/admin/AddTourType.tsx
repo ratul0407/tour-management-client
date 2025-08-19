@@ -1,4 +1,6 @@
+import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { Button } from "@/components/ui/button";
+
 import {
   Table,
   TableBody,
@@ -35,9 +37,11 @@ const AddTourType = () => {
               <TableRow key={index}>
                 <TableCell>{item?.name}</TableCell>
                 <TableCell>
-                  <Button className="bg-red-500">
-                    <Trash2 />
-                  </Button>
+                  <DeleteConfirmation>
+                    <Button size="sm" className="bg-red-500">
+                      <Trash2 />
+                    </Button>
+                  </DeleteConfirmation>
                 </TableCell>
               </TableRow>
             ))}
