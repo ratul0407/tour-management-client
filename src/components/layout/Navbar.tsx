@@ -27,6 +27,11 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
+  {
+    href: "/tours",
+    label: "Tours",
+    role: "PUBLIC",
+  },
 ];
 
 export default function Component() {
