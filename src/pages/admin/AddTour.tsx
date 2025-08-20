@@ -26,12 +26,16 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useGetDivisionsQuery } from "@/redux/features/division/division.api";
-import { useGetTourTypesQuery } from "@/redux/features/tour/tour.api";
+import {
+  useAddTourMutation,
+  useGetTourTypesQuery,
+} from "@/redux/features/tour/tour.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, formatISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 const addTourSchema = z.object({
@@ -47,8 +51,8 @@ const AddTour = () => {
   const [images, setImages] = useState<File[] | []>([]);
   const { data: getTourTypes } = useGetTourTypesQuery(undefined);
   const { data: getDivisions } = useGetDivisionsQuery(undefined);
-  console.log(getDivisions, getTourTypes);
-
+  const [addTour, { isLoading }] = useAddTourMutation();
+  console.log(isLoading);
   const divisionOptions = getDivisions?.map(
     (division: { _id: string; name: string }) => ({
       value: division._id,
@@ -74,14 +78,27 @@ const AddTour = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof addTourSchema>) => {
+  const onSubmit = async (data: z.infer<typeof addTourSchema>) => {
     const tourData = {
       ...data,
       startDate: formatISO(data.startDate),
       endDate: formatISO(data.endDate),
     };
-
-    console.log(tourData);
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(tourData));
+    images.forEach((image) => formData.append("files", image));
+    console.log(formData.getAll("files"));
+    const toastId = toast.loading("Creating tour....");
+    try {
+      const res = await addTour(formData).unwrap();
+      console.log(res);
+      if (res.success) {
+        toast.success("Tour created successfully!", { id: toastId });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data?.message, { id: toastId });
+    }
   };
   return (
     <div>
@@ -327,7 +344,12 @@ const AddTour = () => {
               </div>
             </form>
           </Form>
-          <Button form="add-tour" type="submit" className="text-white">
+          <Button
+            disabled={isLoading}
+            form="add-tour"
+            type="submit"
+            className="text-white"
+          >
             Create Tour
           </Button>
         </CardContent>
