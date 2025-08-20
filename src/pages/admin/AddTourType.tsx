@@ -10,13 +10,30 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import AddTourTypeModal from "@/modules/admin/AddTourTypeModal";
-import { useGetTourTypesQuery } from "@/redux/features/tour/tour.api";
+import AddTourTypeModal from "@/components/modules/admin/tour/AddTourTypeModal";
+import {
+  useGetTourTypesQuery,
+  useRemoveTourTypeMutation,
+} from "@/redux/features/tour/tour.api";
 import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 const AddTourType = () => {
   const { data } = useGetTourTypesQuery(undefined);
-  console.log(data);
+  const [removeTourType] = useRemoveTourTypeMutation();
+
+  const handleRemoveTourType = async (tourId: string) => {
+    try {
+      const toastId = toast.loading("Removing......");
+      const { data } = await removeTourType(tourId);
+      console.log(data);
+      if (data.success) {
+        toast.success("Removed", { id: toastId });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="w-full max-w-7xl mx-auto px-5 ">
       <h1 className="font-bold text-4xl">Tour Types</h1>
@@ -33,18 +50,22 @@ const AddTourType = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.data?.map((item: { name: string }, index: number) => (
-              <TableRow key={index}>
-                <TableCell>{item?.name}</TableCell>
-                <TableCell>
-                  <DeleteConfirmation>
-                    <Button size="sm" className="bg-red-500">
-                      <Trash2 />
-                    </Button>
-                  </DeleteConfirmation>
-                </TableCell>
-              </TableRow>
-            ))}
+            {data?.data?.map(
+              (item: { name: string; _id: string }, index: number) => (
+                <TableRow key={index}>
+                  <TableCell>{item?.name}</TableCell>
+                  <TableCell>
+                    <DeleteConfirmation
+                      onConfirm={() => handleRemoveTourType(item._id)}
+                    >
+                      <Button size="sm" className="bg-red-500">
+                        <Trash2 />
+                      </Button>
+                    </DeleteConfirmation>
+                  </TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </div>

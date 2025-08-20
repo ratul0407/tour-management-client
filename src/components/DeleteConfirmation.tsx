@@ -13,9 +13,11 @@ import { ReactNode } from "react";
 
 interface IProps {
   children: ReactNode;
+  onConfirm: () => void;
 }
-const DeleteConfirmation = ({ children }: IProps) => {
+const DeleteConfirmation = ({ children, onConfirm }: IProps) => {
   const handleConfirm = () => {
+    onConfirm();
     console.log("Confirm clicked");
   };
   return (
@@ -25,8 +27,7 @@ const DeleteConfirmation = ({ children }: IProps) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
