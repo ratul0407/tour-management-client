@@ -7,14 +7,16 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: divisionData,
       }),
+      invalidatesTags: ["DIVISION"],
     }),
 
-    getTourTypes: builder.query({
+    getDivisions: builder.query({
       query: () => ({
-        url: "/tour/tour-types",
+        url: "/division",
         method: "GET",
       }),
       transformResponse: (response) => response.data,
+      providesTags: ["DIVISION"],
     }),
     removeTourType: builder.mutation({
       query: (tourTypeId) => ({
@@ -27,6 +29,6 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useAddDivisionMutation,
-  useGetTourTypesQuery,
+  useGetDivisionsQuery,
   useRemoveTourTypeMutation,
 } = authApi;

@@ -26,7 +26,7 @@ import { useAddDivisionMutation } from "@/redux/features/division/division.api";
 import { toast } from "sonner";
 const AddDivisionModal = () => {
   const [image, setImage] = useState<File | null>(null);
-  const [addDivision] = useAddDivisionMutation();
+  const [addDivision, isLoading] = useAddDivisionMutation();
   console.log(image, "inside adddivision");
   const form = useForm({
     defaultValues: {
@@ -64,69 +64,67 @@ const AddDivisionModal = () => {
   return (
     <div>
       <Dialog open={open} onOpenChange={handleModalOpen}>
-        <form>
-          <DialogTrigger asChild>
-            <Button onClick={() => handleModalOpen(true)}>Add Division</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Add Division</DialogTitle>
-            </DialogHeader>
-            <Form {...form}>
-              <form
-                id="add-tour-type"
-                className="space-y-2"
-                onSubmit={form.handleSubmit(onSubmit)}
-              >
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="space-y-1">
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="enter division name"
-                          type="text"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription className="sr-only">
-                        Enter the tour type name
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />{" "}
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem className="space-y-1">
-                      <FormLabel>Description </FormLabel>
-                      <FormControl>
-                        <Textarea {...field} placeholder="enter description" />
-                      </FormControl>
-                      <FormDescription className="sr-only">
-                        Enter the tour type name
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </form>
-              <SingleImageUploader onChange={setImage} />
-            </Form>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
-              <Button form="add-tour-type" type="submit">
-                Create Division
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </form>
+        <DialogTrigger asChild>
+          <Button onClick={() => handleModalOpen(true)}>Add Division</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Add Division</DialogTitle>
+          </DialogHeader>
+          <Form {...form}>
+            <form
+              id="add-tour-type"
+              className="space-y-2"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="enter division name"
+                        type="text"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription className="sr-only">
+                      Enter the tour type name
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem className="space-y-1">
+                    <FormLabel>Description </FormLabel>
+                    <FormControl>
+                      <Textarea {...field} placeholder="enter description" />
+                    </FormControl>
+                    <FormDescription className="sr-only">
+                      Enter the tour type name
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+            <SingleImageUploader onChange={setImage} />
+          </Form>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button disabled={!image} form="add-tour-type" type="submit">
+              Create Division
+            </Button>
+          </DialogFooter>
+        </DialogContent>
       </Dialog>
     </div>
   );
