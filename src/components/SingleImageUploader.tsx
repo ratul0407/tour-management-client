@@ -4,7 +4,10 @@ import { useFileUpload } from "@/hooks/use-file-upload";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
-export default function SingleImageUploader({ onChange }) {
+interface IProps {
+  onChange: (file: any) => void;
+}
+export default function SingleImageUploader({ onChange }: IProps) {
   const maxSizeMB = 2;
   const maxSize = maxSizeMB * 1024 * 1024; // 2MB default
 
@@ -24,7 +27,7 @@ export default function SingleImageUploader({ onChange }) {
     maxSize,
   });
   const previewUrl = files[0]?.preview || null;
-  const fileName = files[0]?.file.name || null;
+  // const fileName = files[0]?.file.name || null;
   console.log(files);
   useEffect(() => {
     if (files.length > 0) {
@@ -108,20 +111,6 @@ export default function SingleImageUploader({ onChange }) {
           <span>{errors[0]}</span>
         </div>
       )}
-
-      <p
-        aria-live="polite"
-        role="region"
-        className="text-muted-foreground mt-2 text-center text-xs"
-      >
-        Single image uploader w/ max size (drop area + button) ∙{" "}
-        <a
-          href="https://github.com/origin-space/originui/tree/main/docs/use-file-upload.md"
-          className="hover:text-foreground underline"
-        >
-          API
-        </a>
-      </p>
     </div>
   );
 }
