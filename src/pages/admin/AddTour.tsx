@@ -1,3 +1,4 @@
+import MultipleImageUploader from "@/components/MultipleImageUploader";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,6 +30,7 @@ import { useGetTourTypesQuery } from "@/redux/features/tour/tour.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, formatISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -42,6 +44,7 @@ const addTourSchema = z.object({
   endDate: z.any(),
 });
 const AddTour = () => {
+  const [images, setImages] = useState<File[] | []>([]);
   const { data: getTourTypes } = useGetTourTypesQuery(undefined);
   const { data: getDivisions } = useGetDivisionsQuery(undefined);
   console.log(getDivisions, getTourTypes);
@@ -299,23 +302,28 @@ const AddTour = () => {
                     )}
                   />
                 </div>
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          placeholder="enter tour description"
-                        />
-                      </FormControl>
+                <div className="flex w-full items-stretch  gap-3">
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder="enter tour description"
+                          />
+                        </FormControl>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex-1">
+                    <MultipleImageUploader onChange={setImages} />
+                  </div>
+                </div>
               </div>
             </form>
           </Form>

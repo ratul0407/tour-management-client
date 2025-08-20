@@ -1,11 +1,11 @@
 import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react";
 
-import { useFileUpload } from "@/hooks/use-file-upload";
+import { FileMetadata, useFileUpload } from "@/hooks/use-file-upload";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
 interface IProps {
-  onChange: (file: any) => void;
+  onChange: React.Dispatch<React.SetStateAction<File | null | FileMetadata>>;
 }
 export default function SingleImageUploader({ onChange }: IProps) {
   const maxSizeMB = 2;
@@ -35,7 +35,7 @@ export default function SingleImageUploader({ onChange }: IProps) {
     } else {
       onChange(null);
     }
-  }, [files]);
+  }, [files, onChange]);
   return (
     <div className="flex flex-col gap-2">
       <div className="relative">
