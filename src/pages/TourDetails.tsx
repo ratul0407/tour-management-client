@@ -7,7 +7,6 @@ import { Link, useParams } from "react-router";
 export default function TourDetails() {
   const { id } = useParams();
   const { data, isLoading } = useGetAllToursQuery({ _id: id });
-
   const { data: divisionData } = useGetDivisionsQuery(
     {
       _id: data?.[0]?.division,

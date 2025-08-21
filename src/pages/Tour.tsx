@@ -1,4 +1,6 @@
+import TourFilters from "@/components/tour/TourFilters";
 import { Button } from "@/components/ui/button";
+
 import { useGetAllToursQuery } from "@/redux/features/tour/tour.api";
 
 import { Link } from "react-router";
@@ -6,8 +8,10 @@ import { Link } from "react-router";
 export default function Tours() {
   const { data } = useGetAllToursQuery(undefined);
   console.log(data);
+
   return (
     <div className="container mx-auto px-5 py-8 grid grid-cols-12 gap-5">
+      <TourFilters />
       <div className="col-span-9 w-full">
         {data?.data?.map((item) => (
           <div
