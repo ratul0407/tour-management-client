@@ -1,7 +1,7 @@
 import { baseApi } from "@/redux/baseApi";
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    addTourType: builder.mutation({
+    createBooking: builder.mutation({
       query: (tourTypeName) => ({
         url: "/tour/create-tour-type",
         method: "POST",
@@ -35,19 +35,18 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["TOUR"],
     }),
     getAllTours: builder.query({
-      query: (params) => ({
+      query: () => ({
         url: "/tour",
         method: "GET",
-        params,
       }),
-      providesTags: ["TOUR"],
       transformResponse: (response) => response.data,
+      providesTags: ["TOUR"],
     }),
   }),
 });
 
 export const {
-  useAddTourTypeMutation,
+  useCreateBookingMutation,
   useGetTourTypesQuery,
   useRemoveTourTypeMutation,
   useAddTourMutation,
