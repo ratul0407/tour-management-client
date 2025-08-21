@@ -33,7 +33,7 @@ const HeroSection = () => {
             </div>
             <div className="mt-6 flex justify-center gap-3">
               <Button className="shadow-sm transition-shadow hover:shadow">
-                <Link to="/tour">Get Started</Link>
+                <Link to="/tours">Get Started</Link>
               </Button>
             </div>
           </div>

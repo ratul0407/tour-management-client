@@ -2,53 +2,23 @@ import { baseApi } from "@/redux/baseApi";
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createBooking: builder.mutation({
-      query: (tourTypeName) => ({
-        url: "/tour/create-tour-type",
+      query: (bookingData) => ({
+        url: "/booking",
         method: "POST",
-        data: tourTypeName,
+        data: bookingData,
       }),
-      invalidatesTags: ["TOUR"],
+      invalidatesTags: ["BOOKING"],
     }),
 
-    getTourTypes: builder.query({
+    getAllBookings: builder.query({
       query: () => ({
-        url: "/tour/tour-types",
+        url: "/booking",
         method: "GET",
       }),
       transformResponse: (response) => response.data,
-      providesTags: ["TOUR"],
-    }),
-    removeTourType: builder.mutation({
-      query: (tourTypeId) => ({
-        url: `/tour/tour-type/${tourTypeId}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["TOUR"],
-    }),
-
-    addTour: builder.mutation({
-      query: (tourData) => ({
-        url: "/tour/create",
-        method: "POST",
-        data: tourData,
-      }),
-      invalidatesTags: ["TOUR"],
-    }),
-    getAllTours: builder.query({
-      query: () => ({
-        url: "/tour",
-        method: "GET",
-      }),
-      transformResponse: (response) => response.data,
-      providesTags: ["TOUR"],
+      providesTags: ["BOOKING"],
     }),
   }),
 });
 
-export const {
-  useCreateBookingMutation,
-  useGetTourTypesQuery,
-  useRemoveTourTypeMutation,
-  useAddTourMutation,
-  useGetAllToursQuery,
-} = authApi;
+export const { useCreateBookingMutation, useGetAllBookingsQuery } = authApi;
