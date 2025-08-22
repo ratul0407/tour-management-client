@@ -59,7 +59,7 @@ export default function TourDetails() {
 
       {/* Images */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        {tourData?.images?.map((image, index) => (
+        {tourData?.images?.map((image: string, index: number) => (
           <img
             key={index}
             src={image}
@@ -117,7 +117,7 @@ export default function TourDetails() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Amenities</h3>
           <ul className="space-y-1">
-            {tourData?.amenities?.map((amenity, index) => (
+            {tourData?.amenities?.map((amenity: string, index: number) => (
               <li key={index} className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
                 {amenity}
@@ -129,7 +129,7 @@ export default function TourDetails() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Included</h3>
           <ul className="space-y-1">
-            {tourData?.included?.map((item, index) => (
+            {tourData?.included?.map((item: string, index: number) => (
               <li key={index} className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
                 {item}
@@ -141,7 +141,7 @@ export default function TourDetails() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Excluded</h3>
           <ul className="space-y-1">
-            {tourData?.excluded?.map((item, index) => (
+            {tourData?.excluded?.map((item: string, index: number) => (
               <li key={index} className="flex items-center">
                 <span className="text-red-500 mr-2">✗</span>
                 {item}
@@ -155,7 +155,7 @@ export default function TourDetails() {
       <div className="mb-8">
         <h3 className="text-lg font-semibold mb-3">Tour Plan</h3>
         <ol className="space-y-2">
-          {tourData?.tourPlan?.map((plan, index) => (
+          {tourData?.tourPlan?.map((plan: string, index: number) => (
             <li key={index} className="flex">
               <span className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">
                 {index + 1}
